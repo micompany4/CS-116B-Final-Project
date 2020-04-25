@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -203,6 +203,7 @@
     <ClCompile Include="src\RenderCam.cpp" />
     <ClCompile Include="src\SceneObject.cpp" />
     <ClCompile Include="src\Sphere.cpp" />
+    <ClCompile Include="src\Triangle.cpp" />
     <ClCompile Include="src\ViewPlane.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +272,7 @@
     <ClInclude Include="src\RenderCam.h" />
     <ClInclude Include="src\SceneObject.h" />
     <ClInclude Include="src\Sphere.h" />
+    <ClInclude Include="src\Triangle.h" />
     <ClInclude Include="src\ViewPlane.h" />
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ public:
 
 	bool intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal) {
 		return (glm::intersectRaySphere(ray.p, ray.d, position, radius, point, normal));
+		
 	}
 
 	bool intersectToMove(const Ray &ray, glm::vec3 &point, glm::vec3 &normal);

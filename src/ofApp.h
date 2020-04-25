@@ -7,6 +7,7 @@
 #include "Ray.h"
 #include "SceneObject.h"
 #include "Sphere.h"
+#include "Triangle.h"
 #include "ViewPlane.h"
 #include "Plane.h"
 #include "Light.h"

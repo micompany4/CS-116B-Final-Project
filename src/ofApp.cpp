@@ -29,8 +29,10 @@ void ofApp::setup() {
 	//adds objects to the scene
 	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::whiteSmoke));
 
-	//scene.push_back(new Sphere(glm::vec3(-4, 1, 0), 1.25, ofColor::red));
-	scene.push_back(new Sphere(glm::vec3(-0.2, 0.1, 1), 2, ofColor::blue));			//0 0 4
+	ofColor testColor(175, 227, 117);
+	testColor.setHsb(88, 168.96, 171.52);
+	scene.push_back(new Triangle(glm::vec3(-2, 0, 0), glm::vec3(0, 2, 0), glm::vec3(2, 0, 0), ofColor::green));
+	//scene.push_back(new Sphere(glm::vec3(-0.2, 0.1, 1), 2, ofColor::blue));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
 
 	//add lights to the scene
@@ -38,7 +40,7 @@ void ofApp::setup() {
 	lights.push_back(new Light(25, glm::vec3(0, 10, -10), false));
 	//lights.push_back(new Light(50, glm::vec3(6, 5, 6)));
 	//lights.push_back(new Light(150, glm::vec3(-6, 2, 2)));		//-3 0 5
-	lights.push_back(new Light(50, glm::vec3(2.25, 6, 8), false));			//3 4 5   
+	lights.push_back(new Light(50, glm::vec3(5, 6, 14), false));			//3 4 5   
 	//lights.push_back(new Light(100, glm::vec3(-7, 2, 7)));
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
@@ -603,7 +605,6 @@ void ofApp::draw() {
 	{
 		lights[j]->draw();
 	}
-
 
 	//draws the objects in the scene
 	for (int i = 0; i < scene.size(); i++)

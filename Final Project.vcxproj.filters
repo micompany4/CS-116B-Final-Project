@@ -73,6 +73,9 @@
     <ClCompile Include="src\Sphere.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Triangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -312,6 +315,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Sphere.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Triangle.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
