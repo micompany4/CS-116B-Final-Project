@@ -12,6 +12,7 @@
 #include "Plane.h"
 #include "Light.h"
 #include "RenderCam.h"
+#include "Mesh.h"
 
 /*
 	Michael Wong and Areeq Yaqub's CS 116B Final Project
@@ -66,12 +67,14 @@ public:
 	RenderCam renderCam;
 	ofImage image, map;
 	ofImage texture;
+	Mesh objMesh;
+	FILE* f;
 
 	Plane plane;
 	ViewPlane vp;
 	vector<SceneObject *> scene;				//vector to hold all the objects in the scene
 	vector<SceneObject*> selected;				//vector to hold an object that is selected
-	int imageH = 600, imageW = 900;			//dimensions for the image to render
+	int imageH = 400, imageW = 600;			//dimensions for the image to render
 	float squares = 10;							//the dimensions for how many tiles you want layed on the plane
 	int sceneIdx = 0;
 

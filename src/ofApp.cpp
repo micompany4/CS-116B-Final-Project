@@ -20,27 +20,40 @@ void ofApp::setup() {
 	sideCam.lookAt(glm::vec3(0, 0, 0));
 	sideCam.setNearClip(0.1);
 
-	viewCam.setPosition(glm::vec3(0, 0, 10));
+	viewCam.setPosition(glm::vec3(0, 0, 12));
 	viewCam.lookAt(glm::vec3(0, 0, 0));
 	viewCam.setNearClip(0.1);
 
 	ofSetVerticalSync(true);
 
-	//adds objects to the scene
+	//adds a plane to the scene
 	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::whiteSmoke));
 
-	ofColor testColor(175, 227, 117);
-	testColor.setHsb(88, 168.96, 171.52);
-	scene.push_back(new Triangle(glm::vec3(-2, 0, 0), glm::vec3(0, 2, 0), glm::vec3(2, 0, 0), ofColor::green));
+
+	//add primitives to the scene
+	//scene.push_back(new Triangle(glm::vec3(-1, 2, 0), glm::vec3(0, 3, 0), glm::vec3(1, 2, 0), ofColor::yellow));
 	//scene.push_back(new Sphere(glm::vec3(-0.2, 0.1, 1), 2, ofColor::blue));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
+
+
+	//add the mesh to the scene
+	f = fopen("castle.obj", "r");		//monster-light-triangles.obj
+	if (f == NULL)
+	{
+		cout << "file does not exist" << endl;
+		exit();
+	}
+	else
+	{
+		printf("file successfully opened\n");
+	}
+	scene.push_back(new Mesh(f));
+
 
 	//add lights to the scene
 	//lights.push_back(new Light(1, glm::vec3(0, 7, -8)));
 	lights.push_back(new Light(25, glm::vec3(0, 10, -10), false));
-	//lights.push_back(new Light(50, glm::vec3(6, 5, 6)));
-	//lights.push_back(new Light(150, glm::vec3(-6, 2, 2)));		//-3 0 5
-	lights.push_back(new Light(50, glm::vec3(5, 6, 14), false));			//3 4 5   
+	lights.push_back(new Light(50, glm::vec3(5, 6, 14), false));			   
 	//lights.push_back(new Light(100, glm::vec3(-7, 2, 7)));
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
@@ -372,72 +385,40 @@ void ofApp::rayTrace()
 					//what is expected to be seen as viewed from the view plane
 					if (hit)
 					{
-
-						if (distance.size() == 1)
+						//finds the closest object in the scene to the renderCam
+						float c = std::numeric_limits<float>::infinity();		//the shortest distance to the renderCam
+						for (int a = 0; a < distance.size(); a++)
 						{
-							//first element is the plane so use the texture map
-							if (index == 0)
+							//sets the closest object to the renderCam
+							if (distance[a] < c)
 							{
-								//get the coordinates of the hitpoint
-								float x = hitpoint.x + (pWidth / 2);
-								float z = hitpoint.z + (pHeight / 2);
-								//convert hitpoint coordinates to uv coordinates
-								float uu = (x + .5) / pWidth;
-								float vv = (z + .5) / pHeight;
-								ofColor fc = allShader(hitpoint, normal, lookup(uu*squares, vv*squares), scene[index]->specularColor, power, scene[index]) + ambient;
-								//image.setColor(i, row, fc);
-								superColor += fc / 4;			//prevents adding too much color since were getting more color samples per pixel
+								//updates the closest distance and the index of that object in the scene vector
+								c = distance[a];
+								index = a;
+								//cout << c << " " << index << endl;
 							}
-							else
-							{
-								ofColor objColor = allShader(hitpoint, normal, scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]) + ambient;
-								//image.setColor(i, row, objColor);
-								superColor += objColor / 4;	//denominator should match the pq loop variant 
-							}
+						}
 
+						//first element is the plane so use the texture map, kind of a cheat I know
+						if (index == 0)
+						{
+							//gets the coordinates of the closest object 
+							float x = points[index].x + (pWidth / 2);
+							float z = points[index].z + (pHeight / 2);
+							//convert those coordinates to uv coordinates
+							float uu = (x + .5) / pWidth;
+							float vv = (z + .5) / pHeight;
+							ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]) + ambient;
+							//image.setColor(i, row, fc);
+							superColor += fc / 4;
 						}
 						else
 						{
-							//finds the closest object in the scene to the renderCam
-							float c = std::numeric_limits<float>::infinity();		//the shortest distance to the renderCam
-							for (int a = 0; a < distance.size(); a++)
-							{
-								//sets the closest object to the renderCam
-								if (distance[a] < c)
-								{
-									//updates the closest distance and the index of that object in the scene vector
-									c = distance[a];
-									index = a;
-									//cout << c << " " << index << endl;
-
-								}
-							}
-
-							//ofColor col = lambert(points[index], n[index], scene[index]->diffuseColor) + //ambient +
-							//	phong(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power);
-							//image.setColor(i, row, putShadow(points[index], col));	//set color of pixel to value computed from hit point
-							//first element is the plane so use the texture map
-							if (index == 0)
-							{
-								//gets the coordinates of the closest object 
-								float x = points[index].x + (pWidth / 2);
-								float z = points[index].z + (pHeight / 2);
-								//convert those coordinates to uv coordinates
-								float uu = (x + .5) / pWidth;
-								float vv = (z + .5) / pHeight;
-								ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]) + ambient;
-								//image.setColor(i, row, fc);
-								superColor += fc / 4;
-							}
-							else
-							{
-								ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]) + ambient;
-								//image.setColor(i, row, objColor);
-								superColor += objColor / 4;
-							}
-
-
+							ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]) + ambient;
+							//image.setColor(i, row, objColor);
+							superColor += objColor / 4;
 						}
+						
 					}
 					else
 					{
@@ -445,7 +426,7 @@ void ofApp::rayTrace()
 						//image.setColor(i, row, ambient);				//set the background color to the ambient color
 						superColor += ofColor::black;
 					}
-					//row--;
+					
 				}
 			}
 			image.setColor(i, row, superColor);	//we are outside the pq loop, so we can now set the image pixel
