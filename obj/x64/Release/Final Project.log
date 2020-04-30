@@ -1,0 +1,39 @@
+﻿  Triangle.cpp
+  main.cpp
+  ofApp.cpp
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(326): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(331): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(326): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(331): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(912): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(913): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(914): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(915): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\main.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(912): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(913): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(914): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(915): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\ofApp.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(326): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(331): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(912): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(913): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(914): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+c:\users\rocky\documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\openframeworks\math\ofmatrix4x4.h(915): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data (compiling source file src\Triangle.cpp)
+     Creating library bin\Final Project.lib and object bin\Final Project.exp
+  Generating code
+  0 of 617 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Final Project.vcxproj -> C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\Final Project.exe
+  
+  	                   2	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\fmodex\lib\vs\x64\
+  	  *EXTRA File 		 3506176	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\assimp32.dll
+  	  *EXTRA File 		 4244992	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\assimp64.dll
+  	  *EXTRA File 		 6942208	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\FreeImage.dll
+  
+  	                   1	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\libs\FreeImage\lib\vs\x64\
+  	  *EXTRA File 		 3506176	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\assimp32.dll
+  	  *EXTRA File 		 4244992	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\assimp64.dll
+  	  *EXTRA File 		 1503232	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\fmodex64.dll
+  	  *EXTRA File 		 1552384	C:\Users\rocky\Documents\cs116b\of_v0.10.1_vs2017_release\of_v0.10.1_vs2017_release\apps\myApps\Final Project\bin\fmodexL64.dll
