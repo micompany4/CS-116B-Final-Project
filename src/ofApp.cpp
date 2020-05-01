@@ -31,10 +31,9 @@ void ofApp::setup() {
 
 
 	//add primitives to the scene
-	//scene.push_back(new Triangle(glm::vec3(-1, 2, 0), glm::vec3(0, 3, 0), glm::vec3(1, 2, 0), ofColor::yellow));
+	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
 	//scene.push_back(new Sphere(glm::vec3(-0.2, 0.1, 1), 2, ofColor::blue));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
-
 
 	//add the mesh to the scene
 	f = fopen("castle.obj", "r");		//monster-light-triangles.obj
@@ -46,8 +45,12 @@ void ofApp::setup() {
 	else
 	{
 		printf("file successfully opened\n");
+		characterModel.loadModel("castle.obj");
+		characterModel.setScaleNormalization(false);
+		objMesh = new Mesh(f);							
+		scene.push_back(objMesh);						
+		tree.create(*objMesh, lvls);
 	}
-	scene.push_back(new Mesh(f));
 
 
 	//add lights to the scene
@@ -595,8 +598,21 @@ void ofApp::draw() {
 		scene[i]->draw();
 	}
 
+	if (bDrawOctree)
+	{
+		ofNoFill();
+		//tree.draw(lvls, 0);
+		tree.drawLeafNodes(tree.root);
+	}
+	if (bDrawObj)
+	{
+		ofEnableLighting();
+		characterModel.drawFaces();
+	}
+
+
 	theCam->end();
-	//image.draw(glm::vec3(0, 0, 8), imageW, imageH);
+
 }
 
 //deletes the selected object in the scene
@@ -663,6 +679,12 @@ void ofApp::keyPressed(int key) {
 		printf("ray marching in progress...\n");
 		rayMarch();
 		printf("ray march complete\n");
+		break;
+	case 'o':
+		bDrawOctree = !bDrawOctree;
+		break;
+	case 'h':
+		bDrawObj = !bDrawObj;
 		break;
 	case OF_KEY_F1:
 		theCam = &easyCam;

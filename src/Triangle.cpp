@@ -11,7 +11,7 @@ Triangle::Triangle(int i1, int j1, int k1)
 	i = i1;
 	j = j1;
 	k = k1;
-	diffuseColor = ofColor::peachPuff;		//default color to assign to the triangles since reading from .obj file format
+	diffuseColor = ofColor::green;		//default color to assign to the triangles since reading from .obj file format
 }
 
 Triangle::~Triangle()

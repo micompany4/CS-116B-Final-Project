@@ -13,6 +13,7 @@
 #include "Light.h"
 #include "RenderCam.h"
 #include "Mesh.h"
+#include "Octree.h"
 
 /*
 	Michael Wong and Areeq Yaqub's CS 116B Final Project
@@ -67,8 +68,10 @@ public:
 	RenderCam renderCam;
 	ofImage image, map;
 	ofImage texture;
-	Mesh objMesh;
+	Mesh *objMesh;
 	FILE* f;
+	Octree tree;
+	ofxAssimpModelLoader characterModel;
 
 	Plane plane;
 	ViewPlane vp;
@@ -77,6 +80,7 @@ public:
 	int imageH = 400, imageW = 600;			//dimensions for the image to render
 	float squares = 10;							//the dimensions for how many tiles you want layed on the plane
 	int sceneIdx = 0;
+	int lvls = 5;
 
 	glm::vec3 hitpoint, normal;					//vec3s to be used later for intersect
 	Light light;
@@ -112,4 +116,6 @@ public:
 	bool bAnimate = false;
 	bool bAngle = false;
 	bool bTValue = false;
+	bool bDrawOctree = false;
+	bool bDrawObj = false;
 };

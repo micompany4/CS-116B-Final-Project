@@ -15,6 +15,7 @@ Mesh::~Mesh()
 Mesh::Mesh(FILE* f)
 {
 	create(f);
+	diffuseColor = ofColor::green;
 }
 
 bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal) 
@@ -34,7 +35,7 @@ bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal)
 
 		if (glm::intersectRayTriangle(ray.p, ray.d, vertices[triList[i].i - 1], vertices[triList[i].j - 1], vertices[triList[i].k - 1], baryPos))
 		{
-			this->diffuseColor = triList[i].diffuseColor;
+			diffuseColor = triList[i].diffuseColor;			//set the color of the mesh to be the color of the triangle 
 			return true;
 		}
 	}
