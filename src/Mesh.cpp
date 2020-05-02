@@ -74,7 +74,8 @@ void Mesh::create(FILE* f)
 		//add triangles to the mesh's vector of triangles
 		if (strcmp(s, face) == 0)
 		{
-			fscanf(f, "%d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &c, &v, &b);		//scans and only gets the index for the vertices
+			//fscanf(f, "%d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &c, &v, &b);		//scans and only gets the index for the vertices
+			fscanf(f, "%d//%*d %d//%*d %d//%*d", &c, &v, &b);					//modification for link object file
 			triList.push_back(Triangle(c, v, b));
 		}
 

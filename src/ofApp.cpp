@@ -36,7 +36,7 @@ void ofApp::setup() {
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
 
 	//add the mesh to the scene
-	f = fopen("geo/link3.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
