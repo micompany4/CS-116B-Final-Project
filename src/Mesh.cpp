@@ -46,11 +46,19 @@ bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal)
 //loops through all the vertices in the mesh and draws triangles based on their positions
 void Mesh::draw()
 {
+	//cout << "mesh draw" << endl;
 	for (int n = 0; n < triList.size(); n++)
 	{
 		ofNoFill();
 		ofSetColor(ofColor::limeGreen);
+		//cout << "triangle: " << n << " preparing to be drawn" << endl;
+
+		//cout << "vertex x: " << triList[n].i - 1 << endl;
+		//cout << "vertex y: " << triList[n].j - 1 << endl;
+		//cout << "vertex z: " << triList[n].k - 1 << endl;
+
 		ofDrawTriangle(vertices[triList[n].i - 1], vertices[triList[n].j - 1], vertices[triList[n].k - 1]);
+		//cout << "triangle: " << n << " drawn" << endl;
 	}
 }
 
@@ -80,7 +88,6 @@ void Mesh::create(FILE* f)
 
 	cout << "number of faces: " << triList.size() << endl;
 	cout << "number of vertices: " << vertices.size() << endl;
-	cout << "Size of mesh structure: " << sizeOfFile / 1000 << " kB" << endl;
 
 
 	fclose(f);

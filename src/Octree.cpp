@@ -159,7 +159,7 @@ void Octree::create(const Mesh & geo, int numLevels)
 	//createst he bounding box around the mesh
 	root.box = meshBounds(geo);
 
-	
+	cout << "meshBounds done" << endl;
 
 	//populates the root's vertices with the veritces found in the mesh's bounding box
 	for (int i = 0; i < geo.vertices.size(); i++)
@@ -167,7 +167,7 @@ void Octree::create(const Mesh & geo, int numLevels)
 		//cout << "push back points to the root" << endl;
 		root.points.push_back(i);
 	}
-
+	cout << "root's vertices populate done" << endl;
 	
 	//start the creation of the octree starting from the root of the TreeNode
 	subdivide(geo, root, numLevels, 0);

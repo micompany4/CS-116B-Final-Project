@@ -36,7 +36,7 @@ void ofApp::setup() {
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
 
 	//add the mesh to the scene
-	f = fopen("castle.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/link3.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -45,13 +45,14 @@ void ofApp::setup() {
 	else
 	{
 		printf("file successfully opened\n");
-		characterModel.loadModel("castle.obj");
-		characterModel.setScaleNormalization(false);
-		objMesh = new Mesh(f);							
+		//characterModel.loadModel("geo/link3.obj");
+		//characterModel.setScaleNormalization(false);
+		objMesh = new Mesh(f);		
 		scene.push_back(objMesh);						
 		tree.create(*objMesh, lvls);
+		cout << "added mesh and octree" << endl;
 	}
-
+	
 
 	//add lights to the scene
 	//lights.push_back(new Light(1, glm::vec3(0, 7, -8)));
@@ -75,6 +76,7 @@ void ofApp::setup() {
 	gui.add(tValue.setup("t", ofVec2f(2, 0.75), ofVec2f(0, 0), ofVec2f(10, 10)));
 	bHide = false;
 
+	cout << "finished setup" << endl;
 }
 
 void ofApp::printChannel()
@@ -593,16 +595,16 @@ void ofApp::draw() {
 	//draws the objects in the scene
 	for (int i = 0; i < scene.size(); i++)
 	{
-		ofColor ballColor = scene[i]->diffuseColor;
-		ofSetColor(ballColor);
+		ofSetColor(scene[i]->diffuseColor);
 		scene[i]->draw();
 	}
+	
 
 	if (bDrawOctree)
 	{
 		ofNoFill();
-		//tree.draw(lvls, 0);
-		tree.drawLeafNodes(tree.root);
+		tree.draw(lvls, 0);
+		//tree.drawLeafNodes(tree.root);
 	}
 	if (bDrawObj)
 	{
