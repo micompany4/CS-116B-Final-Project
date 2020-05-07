@@ -24,6 +24,7 @@ public:
 	Light *target = NULL;		//default for point light
 	float coneLength = 3;
 
+	float angleToLight = 90;	//angle to recieve maximum light from a light to determine shadow gradient
 	~Light();
 };
 

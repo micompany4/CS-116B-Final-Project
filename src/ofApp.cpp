@@ -32,11 +32,11 @@ void ofApp::setup() {
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	//scene.push_back(new Sphere(glm::vec3(-0.2, 0.1, 1), 2, ofColor::blue));			//0 0 4
+	scene.push_back(new Sphere(glm::vec3(-0.2, 0.5, 2), 2.5, ofColor::blue));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
 
 	//add the mesh to the scene
-	f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
+	//f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -47,18 +47,18 @@ void ofApp::setup() {
 		printf("file successfully opened\n");
 		//characterModel.loadModel("geo/link3.obj");
 		//characterModel.setScaleNormalization(false);
-		objMesh = new Mesh(f);		
-		scene.push_back(objMesh);						
-		tree.create(*objMesh, lvls);
-		cout << "added mesh and octree" << endl;
+		//objMesh = new Mesh(f);		
+		//scene.push_back(objMesh);						
+		//tree.create(*objMesh, lvls);
+		//cout << "added mesh and octree" << endl;
 	}
 	
 
 	//add lights to the scene
-	//lights.push_back(new Light(1, glm::vec3(0, 7, -8)));
-	lights.push_back(new Light(25, glm::vec3(0, 10, -10), false));
-	lights.push_back(new Light(50, glm::vec3(5, 6, 14), false));			   
-	//lights.push_back(new Light(100, glm::vec3(-7, 2, 7)));
+	//lights.push_back(new Light(50, glm::vec3(-2, 7, -9), false));
+	lights.push_back(new Light(100, glm::vec3(0, 10, -10), false));
+	lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));			   
+	//lights.push_back(new Light(50, glm::vec3(-7, 2, 7), false));
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
 	map.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);
@@ -320,8 +320,27 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 
 		totalColor += tempColor;	//add the calcuated color at a specific light to the total color value for that point
 
+		
+		//cout << "brightness: " << totalColor.getBrightness() << endl;
+		//toon shading magic
+		//these magic numbers need to be not magical, they change on a scene by scene basis
+		if (totalColor.getBrightness() <= 40)
+		{
+			totalColor.setBrightness(0);
+			//totalColor = ofColor::black;
+		}
+		else if (totalColor.getBrightness() > 40 && totalColor.getBrightness() < 90)
+		{
+			totalColor.setBrightness(32);
+			//totalColor = ofColor::red;
+		}
+		else
+		{
+			totalColor.setBrightness(128);
+			//totalColor = ofColor::white;
+		}
+	
 	}
-
 	return totalColor;
 }
 
