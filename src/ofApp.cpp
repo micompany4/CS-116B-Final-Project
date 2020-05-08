@@ -55,9 +55,10 @@ void ofApp::setup() {
 	
 
 	//add lights to the scene
-	//lights.push_back(new Light(50, glm::vec3(-5, 6, -9), false));
-	lights.push_back(new Light(100, glm::vec3(0, 10, -10), false));
-	lights.push_back(new Light(200, glm::vec3(-12, 12, 12), false));			   
+	//lights.push_back(new Light(125, glm::vec3(-11, 2, 6), false));
+	lights.push_back(new Light(100, glm::vec3(0, 5, -10), false));
+	//lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));		
+	lights.push_back(new Light(175, glm::vec3(-1, 10, 20), false));
 	//lights.push_back(new Light(500, glm::vec3(5, 20, 10), false));		//the sun
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
@@ -67,7 +68,7 @@ void ofApp::setup() {
 
 	//set up the gui sliders and wheel
 	gui.setup();
-	gui.add(intensity.setup("intensity", 50, 0, 1000));
+	gui.add(intensity.setup("intensity", 75, 0, 1000));
 	gui.add(power.setup("power", 10, 0, 1000));
 	gui.add(radiusSlider.setup("radius", 1, 0, 5));
 	gui.add(coneRadius.setup("spotlightRadius", 0.5, 0.1, 3));
@@ -275,7 +276,7 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 
 		//gets lambert and phong color value
 		//first line is lambert, second line is phong
-		//getting ride of phong because I think cel shading doesn't have specular values; lamberts good enough I think
+		//commented out phong shader because cel shading does not have a specular color to produce highlights 
 		ofColor tempColor = diffuse * lighting * max(bound, glm::dot(glm::normalize(norm), glm::normalize(lights[i]->position - p)));// +
 			//specular * lighting * glm::pow(max(bound, glm::dot(glm::normalize(norm), glm::normalize(h))), power);	
 
@@ -328,12 +329,10 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 		if (totalColor.getBrightness() <= 30)
 		{
 			totalColor.setBrightness(2);
-			//totalColor = ofColor::black;
 		}
 		else if (totalColor.getBrightness() > 30 && totalColor.getBrightness() < 70)
 		{
 			totalColor.setBrightness(8);
-			//totalColor = ofColor::red;
 		}
 		else if (totalColor.getBrightness() >= 70 && totalColor.getBrightness() < 100)
 		{
@@ -341,8 +340,7 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 		}
 		else
 		{
-			totalColor.setBrightness(196);
-			//totalColor = ofColor::white;
+			totalColor.setBrightness(128);
 		}
 	
 	}
