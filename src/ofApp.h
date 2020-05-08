@@ -98,7 +98,7 @@ public:
 	ofxFloatSlider angleRot;
 	ofxVec2Slider tValue;
 
-	ofColor ambient = ofColor(0, 0, 0);	//a constant ambient color
+	ofColor ambient = ofColor::lightCyan;	//a constant ambient color
 	float pWidth = 20, pHeight = 20;
 	//double check these for what values need to be in them
 	const float MAX_RAY_STEPS = 200;			//maximum amount of iterations for moving along the ray

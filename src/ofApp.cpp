@@ -32,8 +32,8 @@ void ofApp::setup() {
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	scene.push_back(new Sphere(glm::vec3(-0.2, 0.5, 2), 2.5, ofColor::blue));			//0 0 4
-	//scene.push_back(new Sphere(glm::vec3(4.5, 2.2, -1.5), 2, ofColor::yellow));
+	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor::green));			//0 0 4
+	scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor::yellow));
 
 	//add the mesh to the scene
 	//f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
@@ -55,10 +55,10 @@ void ofApp::setup() {
 	
 
 	//add lights to the scene
-	//lights.push_back(new Light(50, glm::vec3(-2, 7, -9), false));
+	//lights.push_back(new Light(50, glm::vec3(-4, 6, -11), false));
 	lights.push_back(new Light(100, glm::vec3(0, 10, -10), false));
 	lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));			   
-	//lights.push_back(new Light(50, glm::vec3(-7, 2, 7), false));
+	//lights.push_back(new Light(500, glm::vec3(5, 20, 10), false));		//the sun
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
 	map.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);
@@ -275,8 +275,9 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 
 		//gets lambert and phong color value
 		//first line is lambert, second line is phong
-		ofColor tempColor = diffuse * lighting * max(bound, glm::dot(glm::normalize(norm), glm::normalize(lights[i]->position - p))) +
-			specular * lighting * glm::pow(max(bound, glm::dot(glm::normalize(norm), glm::normalize(h))), power);
+		//getting ride of phong because I think cel shading doesn't have specular values; lamberts good enough I think
+		ofColor tempColor = diffuse * lighting * max(bound, glm::dot(glm::normalize(norm), glm::normalize(lights[i]->position - p)));// +
+			//specular * lighting * glm::pow(max(bound, glm::dot(glm::normalize(norm), glm::normalize(h))), power);
 
 		//move the shadow ray a little away from the point of interection to test for shadows
 		Ray r2 = Ray(p + (0.01 * glm::normalize(norm)), glm::normalize(lights[i]->position - p));
@@ -324,19 +325,23 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 		//cout << "brightness: " << totalColor.getBrightness() << endl;
 		//toon shading magic
 		//these magic numbers need to be not magical, they change on a scene by scene basis
-		if (totalColor.getBrightness() <= 40)
+		if (totalColor.getBrightness() <= 30)
 		{
-			totalColor.setBrightness(0);
+			totalColor.setBrightness(2);
 			//totalColor = ofColor::black;
 		}
-		else if (totalColor.getBrightness() > 40 && totalColor.getBrightness() < 90)
+		else if (totalColor.getBrightness() > 30 && totalColor.getBrightness() < 70)
 		{
-			totalColor.setBrightness(32);
+			totalColor.setBrightness(8);
 			//totalColor = ofColor::red;
+		}
+		else if (totalColor.getBrightness() >= 70 && totalColor.getBrightness() < 100)
+		{
+			totalColor.setBrightness(24);
 		}
 		else
 		{
-			totalColor.setBrightness(128);
+			totalColor.setBrightness(196);
 			//totalColor = ofColor::white;
 		}
 	
@@ -359,7 +364,6 @@ ofColor ofApp::lookup(float u, float v)
 // Invoked with the key 't'
 void ofApp::rayTrace()
 {
-
 	//for each pixel
 	for (int i = 0; i < imageW; i++)
 	{
@@ -433,13 +437,11 @@ void ofApp::rayTrace()
 							float uu = (x + .5) / pWidth;
 							float vv = (z + .5) / pHeight;
 							ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]) + ambient;
-							//image.setColor(i, row, fc);
 							superColor += fc / 4;
 						}
 						else
 						{
 							ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]) + ambient;
-							//image.setColor(i, row, objColor);
 							superColor += objColor / 4;
 						}
 						
