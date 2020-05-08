@@ -27,7 +27,7 @@ void ofApp::setup() {
 	ofSetVerticalSync(true);
 
 	//adds a plane to the scene
-	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::whiteSmoke));
+	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::darkOliveGreen));
 
 
 	//add primitives to the scene
@@ -36,7 +36,7 @@ void ofApp::setup() {
 	scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor::yellow));
 
 	//add the mesh to the scene
-	//f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -55,9 +55,9 @@ void ofApp::setup() {
 	
 
 	//add lights to the scene
-	//lights.push_back(new Light(50, glm::vec3(-4, 6, -11), false));
+	//lights.push_back(new Light(50, glm::vec3(-5, 6, -9), false));
 	lights.push_back(new Light(100, glm::vec3(0, 10, -10), false));
-	lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));			   
+	lights.push_back(new Light(200, glm::vec3(-12, 12, 12), false));			   
 	//lights.push_back(new Light(500, glm::vec3(5, 20, 10), false));		//the sun
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
@@ -68,7 +68,7 @@ void ofApp::setup() {
 	//set up the gui sliders and wheel
 	gui.setup();
 	gui.add(intensity.setup("intensity", 50, 0, 1000));
-	gui.add(power.setup("power", 10, 10, 1000));
+	gui.add(power.setup("power", 10, 0, 1000));
 	gui.add(radiusSlider.setup("radius", 1, 0, 5));
 	gui.add(coneRadius.setup("spotlightRadius", 0.5, 0.1, 3));
 	gui.add(colorWheel.setup("colors", ofColor::gray, ofColor::black, ofColor::white));
@@ -277,7 +277,7 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 		//first line is lambert, second line is phong
 		//getting ride of phong because I think cel shading doesn't have specular values; lamberts good enough I think
 		ofColor tempColor = diffuse * lighting * max(bound, glm::dot(glm::normalize(norm), glm::normalize(lights[i]->position - p)));// +
-			//specular * lighting * glm::pow(max(bound, glm::dot(glm::normalize(norm), glm::normalize(h))), power);
+			//specular * lighting * glm::pow(max(bound, glm::dot(glm::normalize(norm), glm::normalize(h))), power);	
 
 		//move the shadow ray a little away from the point of interection to test for shadows
 		Ray r2 = Ray(p + (0.01 * glm::normalize(norm)), glm::normalize(lights[i]->position - p));
@@ -428,29 +428,29 @@ void ofApp::rayTrace()
 						}
 
 						//first element is the plane so use the texture map, kind of a cheat I know
-						if (index == 0)
-						{
-							//gets the coordinates of the closest object 
-							float x = points[index].x + (pWidth / 2);
-							float z = points[index].z + (pHeight / 2);
-							//convert those coordinates to uv coordinates
-							float uu = (x + .5) / pWidth;
-							float vv = (z + .5) / pHeight;
-							ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]) + ambient;
-							superColor += fc / 4;
-						}
-						else
-						{
-							ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]) + ambient;
+						//if (index == 0)
+						//{
+						//	//gets the coordinates of the closest object 
+						//	float x = points[index].x + (pWidth / 2);
+						//	float z = points[index].z + (pHeight / 2);
+						//	//convert those coordinates to uv coordinates
+						//	float uu = (x + .5) / pWidth;
+						//	float vv = (z + .5) / pHeight;
+						//	ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]);
+						//	superColor += fc / 4;
+						//}
+						//else
+						//{
+							ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]);
 							superColor += objColor / 4;
-						}
+						//}
 						
 					}
 					else
 					{
 						//image.setColor(i, row, ofColor::black);			//set the background color to black
 						//image.setColor(i, row, ambient);				//set the background color to the ambient color
-						superColor += ofColor::black;
+						superColor = ambient;
 					}
 					
 				}
