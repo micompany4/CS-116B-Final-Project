@@ -27,13 +27,14 @@ void ofApp::setup() {
 	ofSetVerticalSync(true);
 
 	//adds a plane to the scene
-	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::darkOliveGreen));
+	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::darkBlue));
 
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor::green));			//0 0 4
-	scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor::yellow));
+	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
+	scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
+	scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
 	//add the mesh to the scene
 	f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
@@ -45,7 +46,7 @@ void ofApp::setup() {
 	else
 	{
 		printf("file successfully opened\n");
-		//characterModel.loadModel("geo/link3.obj");
+		//characterModel.loadModel("geo/link0.obj");
 		//characterModel.setScaleNormalization(false);
 		//objMesh = new Mesh(f);		
 		//scene.push_back(objMesh);						
@@ -55,10 +56,10 @@ void ofApp::setup() {
 	
 
 	//add lights to the scene
-	//lights.push_back(new Light(125, glm::vec3(-11, 2, 6), false));
-	lights.push_back(new Light(100, glm::vec3(0, 5, -10), false));
-	//lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));		
-	lights.push_back(new Light(175, glm::vec3(-1, 10, 20), false));
+	lights.push_back(new Light(105, glm::vec3(-12, 3, 17), false));
+	lights.push_back(new Light(100, glm::vec3(-0.8, 14.7, -2.7), false));
+	lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));		
+	//lights.push_back(new Light(75, glm::vec3(0, 8, 0), false));
 	//lights.push_back(new Light(500, glm::vec3(5, 20, 10), false));		//the sun
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
@@ -88,6 +89,7 @@ void ofApp::printChannel()
 		cout << "Rotation: " << "x: " << selected[0]->rotation.x << " y: " << selected[0]->rotation.y << " z: " << selected[0]->rotation.z << endl;
 		cout << "Radius: " << selected[0]->radius << endl;
 		cout << "Intensity: " << selected[0]->intensity << endl;
+		cout << "Color: " << selected[0]->diffuseColor << endl;
 		cout << "Angle: " << selected[0]->angleRotate << endl;
 		cout << "t: " << "t.x: " << selected[0]->t.x << " t.y: " << selected[0]->t.y << endl;
 	}
@@ -255,6 +257,7 @@ ofColor ofApp::phong(const glm::vec3 &p, const glm::vec3 &norm, const ofColor di
 ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColor diffuse, const ofColor specular, float power, SceneObject* obj)
 {
 	ofColor totalColor = ofColor::black;	//set an inital color to black since its (0, 0, 0) so we can add color to it
+	ofColor diffuse2 = diffuse;
 	float bound = 0;
 
 	//for each light, get a shading color value
@@ -321,29 +324,27 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 		}		//but of course if a scene has multiple lights and 1 >= more reaches that point, it'll start to show color and the shadow gets dimmer
 
 		totalColor += tempColor;	//add the calcuated color at a specific light to the total color value for that point
-
-		
-		//cout << "brightness: " << totalColor.getBrightness() << endl;
-		//toon shading magic
-		//these magic numbers need to be not magical, they change on a scene by scene basis
-		if (totalColor.getBrightness() <= 30)
-		{
-			totalColor.setBrightness(2);
-		}
-		else if (totalColor.getBrightness() > 30 && totalColor.getBrightness() < 70)
-		{
-			totalColor.setBrightness(8);
-		}
-		else if (totalColor.getBrightness() >= 70 && totalColor.getBrightness() < 100)
-		{
-			totalColor.setBrightness(24);
-		}
-		else
-		{
-			totalColor.setBrightness(128);
-		}
 	
 	}
+
+	//cout << "brightness: " << totalColor.getBrightness() << endl;
+	//toon shading magic
+	//values where deemed through experimentation and observation 
+	if (totalColor.getBrightness() <=40)
+	{
+		diffuse2.setBrightness(12);
+		totalColor = diffuse2;
+	}
+	else if (totalColor.getBrightness() > 40 && totalColor.getBrightness() < 60)
+	{
+		totalColor.setBrightness(40);
+		//totalColor = ofColor::darkRed;
+	}
+	else
+	{
+		totalColor.setBrightness(64);
+	}
+
 	return totalColor;
 }
 
@@ -627,7 +628,6 @@ void ofApp::draw() {
 	}
 	if (bDrawObj)
 	{
-		ofEnableLighting();
 		characterModel.drawFaces();
 	}
 
