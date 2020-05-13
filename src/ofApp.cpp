@@ -32,12 +32,12 @@ void ofApp::setup() {
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
-	scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
-	scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
+	//scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
+	//scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
+	//scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
 	//add the mesh to the scene
-	f = fopen("geo/link0.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/castle.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -48,10 +48,10 @@ void ofApp::setup() {
 		printf("file successfully opened\n");
 		//characterModel.loadModel("geo/link0.obj");
 		//characterModel.setScaleNormalization(false);
-		//objMesh = new Mesh(f);		
-		//scene.push_back(objMesh);						
-		//tree.create(*objMesh, lvls);
-		//cout << "added mesh and octree" << endl;
+		objMesh = new Mesh(f);		
+		scene.push_back(objMesh);						
+		tree.create(*objMesh, lvls);
+		cout << "added mesh and octree" << endl;
 	}
 	
 
@@ -330,14 +330,14 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 	//cout << "brightness: " << totalColor.getBrightness() << endl;
 	//toon shading magic
 	//values where deemed through experimentation and observation 
-	if (totalColor.getBrightness() <=40)
+	if (totalColor.getBrightness() <= 40)
 	{
-		diffuse2.setBrightness(12);
+		diffuse2.setBrightness(9);
 		totalColor = diffuse2;
 	}
 	else if (totalColor.getBrightness() > 40 && totalColor.getBrightness() < 60)
 	{
-		totalColor.setBrightness(40);
+		totalColor.setBrightness(27);
 		//totalColor = ofColor::darkRed;
 	}
 	else

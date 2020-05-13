@@ -15,6 +15,7 @@ public:
 		return (p + t * d);
 	}
 
-	glm::vec3 p, d;
+	glm::vec3 p, d, inv_direction;
+	int sign[3];
 };
 

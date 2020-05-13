@@ -74,8 +74,8 @@ void Mesh::create(FILE* f)
 		//add triangles to the mesh's vector of triangles
 		if (strcmp(s, face) == 0)
 		{
-			//fscanf(f, "%d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &c, &v, &b);		//scans and only gets the index for the vertices
-			fscanf(f, "%d//%*d %d//%*d %d//%*d", &c, &v, &b);					//modification for link object file
+			fscanf(f, "%d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &c, &v, &b);		//scans and only gets the index for the vertices
+			//fscanf(f, "%d//%*d %d//%*d %d//%*d", &c, &v, &b);					//modification for link object file
 			triList.push_back(Triangle(c, v, b));
 		}
 
@@ -85,6 +85,11 @@ void Mesh::create(FILE* f)
 			fscanf(f, "%f %f %f", &v1, &v2, &v3);
 			vertices.push_back(glm::vec3(v1, v2, v3));
 		}
+	}
+
+	for (int i = 0; i < vertices.size(); i++)
+	{
+		vertices[i].y -= 2;
 	}
 
 	cout << "number of faces: " << triList.size() << endl;

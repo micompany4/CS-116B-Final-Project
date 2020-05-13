@@ -81,7 +81,6 @@ Box Octree::meshBounds(const Mesh & mesh) {
 		else if (v.z < min.z) min.z = v.z;
 	}
 	
-	cout << "vertices: " << n << endl;
 //	cout << "min: " << min << "max: " << max << endl;
 	return Box(Vector3(min.x, min.y, min.z), Vector3(max.x, max.y, max.z));
 }
