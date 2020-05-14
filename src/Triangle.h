@@ -5,7 +5,7 @@ class Triangle : public SceneObject
 {
 public:
 	Triangle();
-	Triangle(int i1, int j1, int k1);
+	Triangle(int i1, int j1, int k1, int t4, int t5, int t6);
 	Triangle(glm::vec3 vert1, glm::vec3 vert2, glm::vec3 vert3, ofColor diffuse = ofColor::green)
 	{
 		v1 = vert1;
@@ -35,7 +35,8 @@ public:
 		
 	}
 
-	int i, j, k;	//the three vertices that make up the triangle
+	int i, j, k;			//the three vertices that make up the triangle
+	int t1, t2, t3;			//the three texture vertices that the triangle has
 	glm::vec3 v1, v2, v3;
 };
 

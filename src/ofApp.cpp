@@ -32,12 +32,12 @@ void ofApp::setup() {
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	//scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
+	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
 	//scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
 	//add the mesh to the scene
-	f = fopen("geo/castle.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/monster.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -48,10 +48,12 @@ void ofApp::setup() {
 		printf("file successfully opened\n");
 		//characterModel.loadModel("geo/link0.obj");
 		//characterModel.setScaleNormalization(false);
-		objMesh = new Mesh(f);		
+		/*texture.load("alienColor.jpg");				//load the texture you want for the plane
+		objMesh = new Mesh(f, texture);		
 		scene.push_back(objMesh);						
 		tree.create(*objMesh, lvls);
 		cout << "added mesh and octree" << endl;
+		*/
 	}
 	
 
@@ -64,9 +66,7 @@ void ofApp::setup() {
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
 	map.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);
-
-	texture.load("tile3.jpg");				//load the texture you want for the plane
-
+	
 	//set up the gui sliders and wheel
 	gui.setup();
 	gui.add(intensity.setup("intensity", 75, 0, 1000));

@@ -12,10 +12,10 @@ Mesh::~Mesh()
 }
 
 
-Mesh::Mesh(FILE* f)
+Mesh::Mesh(FILE* f, ofImage img)
 {
-	create(f);
-	diffuseColor = ofColor::green;
+	create(f, img);
+	diffuseColor = ofColor::green;		//no effect on the rendering, just for scene aesthetic 
 }
 
 bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal) 
@@ -64,7 +64,7 @@ void Mesh::draw()
 
 //creates a mesh from an obj file 
 //scans through the entire file to find vertices and faces
-void Mesh::create(FILE* f)
+void Mesh::create(FILE* f, ofImage img)
 {
 	//scans through the file until it reaches the end of the file
 	while (fscanf(f, "%s", s) != EOF)
@@ -74,9 +74,15 @@ void Mesh::create(FILE* f)
 		//add triangles to the mesh's vector of triangles
 		if (strcmp(s, face) == 0)
 		{
-			fscanf(f, "%d/%*d/%*d %d/%*d/%*d %d/%*d/%*d", &c, &v, &b);		//scans and only gets the index for the vertices
+			fscanf(f, "%d/%d/%*d %d/%d/%*d %d/%d/%*d", &c, &j, &v, &k, &b, &l);		//scans and only gets the index for the vertices
 			//fscanf(f, "%d//%*d %d//%*d %d//%*d", &c, &v, &b);					//modification for link object file
-			triList.push_back(Triangle(c, v, b));
+			triList.push_back(Triangle(c, v, b, j, k, l));
+		}
+
+		if (strcmp(s, text) == 0)
+		{
+			fscanf(f, "%f %f", &t1, &t2);
+			texture.push_back(glm::vec2(t1, t2));
 		}
 
 		//add vertices to the mesh's vector of vertices
@@ -92,9 +98,40 @@ void Mesh::create(FILE* f)
 		vertices[i].y -= 2;
 	}
 
+	for (int i = 0; i < triList.size(); i++)
+	{
+		//triangle's 1 vertex's uv texture coord
+		int textureUX = texture[triList[i].t1 - 1].x;
+		int textureVX = texture[triList[i].t1 - 1].y;
+
+		//triangle's 2 vertex's uv texture coord
+		int textureUY = texture[triList[i].t2 - 1].x;
+		int textureVY = texture[triList[i].t2 - 1].y;
+
+		//triangle's 3 vertex's uv texture coord
+		int textureUZ = texture[triList[i].t3 - 1].x;
+		int textureVZ = texture[triList[i].t3 - 1].y;
+		
+		//convert triangle' 1 vertex's uv to xy
+		int x1 = round(textureUX * 2000 - 0.5);
+		int y1 = round(textureVY * 2000 - 0.5);
+
+		//converts triangle's 2 vertex's uv to xy
+		int x2 = round(textureUY * 2000 - 0.5);
+		int y2 = round(textureVY * 2000 - 0.5);
+		
+		//converts triangle's 3 vertex's uv to xy
+		int x3 = round(textureUZ * 2000 - 0.5);
+		int y3 = round(textureVZ * 2000 - 0.5);
+
+		//made get all three colors and average them out to assign as the the triangle's diffuse color 
+		ofColor average = (img.getColor(x1, y1) + img.getColor(x2, y2) + img.getColor(x3, y3)) / 3;
+		triList[i].diffuseColor = average;
+	}
+
 	cout << "number of faces: " << triList.size() << endl;
 	cout << "number of vertices: " << vertices.size() << endl;
-
+	cout << "number of texture vertices: " << texture.size() << endl;
 
 	fclose(f);
 }
