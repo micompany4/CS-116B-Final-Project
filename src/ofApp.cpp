@@ -39,7 +39,7 @@ void ofApp::setup() {
 	//scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
 	//add the mesh to the scene
-	f = fopen("geo/monster.obj", "r");		//monster-light-triangles.obj
+	f = fopen("geo/monster-light-triangles.obj", "r");		//monster-light-triangles.obj
 	if (f == NULL)
 	{
 		cout << "file does not exist" << endl;
@@ -57,7 +57,7 @@ void ofApp::setup() {
 		objMesh = new Mesh(f, texture);		
 		scene.push_back(objMesh);						
 		//tree.create(*objMesh, lvls);
-		cout << "added mesh and octree" << endl;
+		cout << "added mesh" << endl;
 		
 	}
 	

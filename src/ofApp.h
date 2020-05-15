@@ -77,7 +77,7 @@ public:
 	ViewPlane vp;
 	vector<SceneObject *> scene;				//vector to hold all the objects in the scene
 	vector<SceneObject*> selected;				//vector to hold an object that is selected
-	int imageH = 300, imageW = 450;			//dimensions for the image to render
+	int imageH = 200, imageW = 300;			//dimensions for the image to render
 	float squares = 10;							//the dimensions for how many tiles you want layed on the plane
 	int sceneIdx = 0;
 	int lvls = 5;

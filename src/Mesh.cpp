@@ -18,9 +18,9 @@ Mesh::Mesh(FILE* f, ofImage img)
 	diffuseColor = ofColor::green;		//no effect on the rendering, just for scene aesthetic 
 }
 
-bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal) 
-{ 
-	
+bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal)
+{
+
 	for (int i = 0; i < triList.size(); i++)
 	{
 		float x = (vertices[triList[i].i - 1].x + vertices[triList[i].j - 1].x + vertices[triList[i].k - 1].x) / 3;
@@ -39,7 +39,7 @@ bool Mesh::intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal)
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -99,7 +99,7 @@ void Mesh::create(FILE* f, ofImage img)
 	{
 		vertices[i].y -= 2;
 	}
-	
+
 	ofImage image;
 	if (image.load("alienColor.jpg"))
 	{
@@ -128,11 +128,11 @@ void Mesh::create(FILE* f, ofImage img)
 		//convert triangle' 1 vertex's uv to xy
 		int x1 = round(textureU1 * image.getWidth() - 0.5);
 		int y1 = round(textureV1 * image.getHeight() - 0.5);
-		
+
 		//converts triangle's 2 vertex's uv to xy
 		int x2 = round(textureU2 * image.getWidth() - 0.5);
 		int y2 = round(textureV2 * image.getHeight() - 0.5);
-		
+
 		//converts triangle's 3 vertex's uv to xy
 		int x3 = round(textureU3 * image.getWidth() - 0.5);
 		int y3 = round(textureV3 * image.getHeight() - 0.5);
@@ -144,7 +144,7 @@ void Mesh::create(FILE* f, ofImage img)
 		ofColor vertex2Color = image.getColor(x2, y2);
 		//cout << "x3: " << x1 << " y3: " << y1 << endl;
 		ofColor vertex3Color = image.getColor(x3, y3);
-		
+
 		//cout << "All colors are assigned" << endl;
 		//find the center of the texture map's triangle
 		int x4 = (x1 + x2 + x3) / 3;
