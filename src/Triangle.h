@@ -26,7 +26,9 @@ public:
 		float z = (v1.z + v1.z + v3.z) / 3;
 		
 		glm::vec3 baryPos = glm::vec3(x, y, z);
-		p = baryPos;
+		p = baryPos;	//assign the point of intersection to be the center of the triangle
+
+		//calcuate the face normal
 		glm::vec3 v1v2 = v2 - v1;
 		glm::vec3 v1v3 = v3 - v1;
 		normal = glm::cross(v1v2, v1v3);

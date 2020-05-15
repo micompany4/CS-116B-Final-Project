@@ -139,15 +139,18 @@ void Mesh::create(FILE* f, ofImage img)
 
 		//calculate all vetices' colors based on the texture map
 		//cout << "x1: " << x1 << " y1: " << y1 << endl;
-		ofColor vertex1Color = image.getColor((int)fmod(x1, image.getWidth()), (int)fmod(y1, image.getHeight()));
+		ofColor vertex1Color = image.getColor(x1, y1);
 		//cout << "x2: " << x1 << " y2: " << y1 << endl;
-		ofColor vertex2Color = image.getColor((int)fmod(x2, image.getWidth()), (int)fmod(y2, image.getHeight()));
+		ofColor vertex2Color = image.getColor(x2, y2);
 		//cout << "x3: " << x1 << " y3: " << y1 << endl;
-		ofColor vertex3Color = image.getColor((int)fmod(x3, image.getWidth()), (int)fmod(y3, image.getHeight()));
+		ofColor vertex3Color = image.getColor(x3, y3);
 		
 		//cout << "All colors are assigned" << endl;
+		//find the center of the texture map's triangle
+		int x4 = (x1 + x2 + x3) / 3;
+		int y4 = (y1 + y2 + y3) / 3;
 
-		ofColor average = (vertex1Color + vertex2Color + vertex3Color) / 3;
+		ofColor average = image.getColor(x4, y4);	//assign that center color to be the color of the triangle
 		triList[i].diffuseColor = average;
 	}
 
