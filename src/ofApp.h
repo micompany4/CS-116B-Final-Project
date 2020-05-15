@@ -81,6 +81,7 @@ public:
 	float squares = 10;							//the dimensions for how many tiles you want layed on the plane
 	int sceneIdx = 0;
 	int lvls = 5;
+	ofSoundPlayer ping;
 
 	glm::vec3 hitpoint, normal;					//vec3s to be used later for intersect
 	Light light;
@@ -98,7 +99,7 @@ public:
 	ofxFloatSlider angleRot;
 	ofxVec2Slider tValue;
 
-	ofColor ambient = ofColor::lightCyan;	//a constant ambient color
+	ofColor ambient = ofColor::lightGray;	//a constant ambient color
 	float pWidth = 20, pHeight = 20;
 	//double check these for what values need to be in them
 	const float MAX_RAY_STEPS = 200;			//maximum amount of iterations for moving along the ray

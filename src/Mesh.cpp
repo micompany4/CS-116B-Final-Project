@@ -79,6 +79,7 @@ void Mesh::create(FILE* f, ofImage img)
 			triList.push_back(Triangle(c, v, b, j, k, l));
 		}
 
+		//add texture vertices to the mesh's vector of texture vertices
 		if (strcmp(s, text) == 0)
 		{
 			fscanf(f, "%f %f", &t1, &t2);
@@ -93,39 +94,60 @@ void Mesh::create(FILE* f, ofImage img)
 		}
 	}
 
+	//move the mesh down in the y axis by 2 units
 	for (int i = 0; i < vertices.size(); i++)
 	{
 		vertices[i].y -= 2;
 	}
+	
+	ofImage image;
+	if (image.load("alienColor.jpg"))
+	{
+		cout << "texture loaded successfully" << endl;
+	}
 
+
+	//assign each triangle a color based on their texture vertices
 	for (int i = 0; i < triList.size(); i++)
 	{
-		//triangle's 1 vertex's uv texture coord
-		int textureUX = texture[triList[i].t1 - 1].x;
-		int textureVX = texture[triList[i].t1 - 1].y;
+		//triangle's 1 vertex's uv texture coord		
+		float textureU1 = texture[triList[i].t1 - 1].x;
+		float textureV1 = texture[triList[i].t1 - 1].y;
+		//cout << "textureU1: " << textureU1 << " textureV1: " << textureV1 << endl;
 
 		//triangle's 2 vertex's uv texture coord
-		int textureUY = texture[triList[i].t2 - 1].x;
-		int textureVY = texture[triList[i].t2 - 1].y;
+		float textureU2 = texture[triList[i].t2 - 1].x;
+		float textureV2 = texture[triList[i].t2 - 1].y;
+		//cout << "textureU2: " << textureU2 << " textureV2: " << textureV2 << endl;
 
 		//triangle's 3 vertex's uv texture coord
-		int textureUZ = texture[triList[i].t3 - 1].x;
-		int textureVZ = texture[triList[i].t3 - 1].y;
-		
-		//convert triangle' 1 vertex's uv to xy
-		int x1 = round(textureUX * 2000 - 0.5);
-		int y1 = round(textureVY * 2000 - 0.5);
+		float textureU3 = texture[triList[i].t3 - 1].x;
+		float textureV3 = texture[triList[i].t3 - 1].y;
+		//cout << "textureU3: " << textureU3 << " textureV3: " << textureV3 << endl;
 
+		//convert triangle' 1 vertex's uv to xy
+		int x1 = round(textureU1 * image.getWidth() - 0.5);
+		int y1 = round(textureV1 * image.getHeight() - 0.5);
+		
 		//converts triangle's 2 vertex's uv to xy
-		int x2 = round(textureUY * 2000 - 0.5);
-		int y2 = round(textureVY * 2000 - 0.5);
+		int x2 = round(textureU2 * image.getWidth() - 0.5);
+		int y2 = round(textureV2 * image.getHeight() - 0.5);
 		
 		//converts triangle's 3 vertex's uv to xy
-		int x3 = round(textureUZ * 2000 - 0.5);
-		int y3 = round(textureVZ * 2000 - 0.5);
+		int x3 = round(textureU3 * image.getWidth() - 0.5);
+		int y3 = round(textureV3 * image.getHeight() - 0.5);
 
-		//made get all three colors and average them out to assign as the the triangle's diffuse color 
-		ofColor average = (img.getColor(x1, y1) + img.getColor(x2, y2) + img.getColor(x3, y3)) / 3;
+		//calculate all vetices' colors based on the texture map
+		//cout << "x1: " << x1 << " y1: " << y1 << endl;
+		ofColor vertex1Color = image.getColor((int)fmod(x1, image.getWidth()), (int)fmod(y1, image.getHeight()));
+		//cout << "x2: " << x1 << " y2: " << y1 << endl;
+		ofColor vertex2Color = image.getColor((int)fmod(x2, image.getWidth()), (int)fmod(y2, image.getHeight()));
+		//cout << "x3: " << x1 << " y3: " << y1 << endl;
+		ofColor vertex3Color = image.getColor((int)fmod(x3, image.getWidth()), (int)fmod(y3, image.getHeight()));
+		
+		//cout << "All colors are assigned" << endl;
+
+		ofColor average = (vertex1Color + vertex2Color + vertex3Color) / 3;
 		triList[i].diffuseColor = average;
 	}
 

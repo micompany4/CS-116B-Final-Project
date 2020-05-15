@@ -26,13 +26,15 @@ void ofApp::setup() {
 
 	ofSetVerticalSync(true);
 
+	ping.load("quick.mp3");
+
 	//adds a plane to the scene
 	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::darkBlue));
 
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
+	//scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
 	//scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
 	//scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
@@ -48,12 +50,15 @@ void ofApp::setup() {
 		printf("file successfully opened\n");
 		//characterModel.loadModel("geo/link0.obj");
 		//characterModel.setScaleNormalization(false);
-		/*texture.load("alienColor.jpg");				//load the texture you want for the plane
+		/*if (texture.load("alienColor.jpg"))
+		{
+			cout << "texture map loaded successfully" << endl;
+		}*/
 		objMesh = new Mesh(f, texture);		
 		scene.push_back(objMesh);						
-		tree.create(*objMesh, lvls);
+		//tree.create(*objMesh, lvls);
 		cout << "added mesh and octree" << endl;
-		*/
+		
 	}
 	
 
@@ -693,12 +698,14 @@ void ofApp::keyPressed(int key) {
 		bTrace = true;
 		printf("ray tracing in progress...\n");
 		rayTrace();
+		ping.play();
 		printf("ray tracing complete\n");
 		break;
 	case 'm':
 		bTrace = false;
 		printf("ray marching in progress...\n");
 		rayMarch();
+		ping.play();
 		printf("ray march complete\n");
 		break;
 	case 'o':
