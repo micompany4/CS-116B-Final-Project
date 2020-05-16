@@ -12,9 +12,9 @@ Mesh::~Mesh()
 }
 
 
-Mesh::Mesh(FILE* f, ofImage img)
+Mesh::Mesh(FILE* f)
 {
-	create(f, img);
+	create(f);
 	diffuseColor = ofColor::green;		//no effect on the rendering, just for scene aesthetic 
 }
 
@@ -64,7 +64,7 @@ void Mesh::draw()
 
 //creates a mesh from an obj file 
 //scans through the entire file to find vertices and faces
-void Mesh::create(FILE* f, ofImage img)
+void Mesh::create(FILE* f)
 {
 	//scans through the file until it reaches the end of the file
 	while (fscanf(f, "%s", s) != EOF)
@@ -113,17 +113,14 @@ void Mesh::create(FILE* f, ofImage img)
 		//triangle's 1 vertex's uv texture coord		
 		float textureU1 = texture[triList[i].t1 - 1].x;
 		float textureV1 = texture[triList[i].t1 - 1].y;
-		//cout << "textureU1: " << textureU1 << " textureV1: " << textureV1 << endl;
 
 		//triangle's 2 vertex's uv texture coord
 		float textureU2 = texture[triList[i].t2 - 1].x;
 		float textureV2 = texture[triList[i].t2 - 1].y;
-		//cout << "textureU2: " << textureU2 << " textureV2: " << textureV2 << endl;
 
 		//triangle's 3 vertex's uv texture coord
 		float textureU3 = texture[triList[i].t3 - 1].x;
 		float textureV3 = texture[triList[i].t3 - 1].y;
-		//cout << "textureU3: " << textureU3 << " textureV3: " << textureV3 << endl;
 
 		//convert triangle' 1 vertex's uv to xy
 		int x1 = round(textureU1 * image.getWidth() - 0.5);
@@ -137,15 +134,6 @@ void Mesh::create(FILE* f, ofImage img)
 		int x3 = round(textureU3 * image.getWidth() - 0.5);
 		int y3 = round(textureV3 * image.getHeight() - 0.5);
 
-		//calculate all vetices' colors based on the texture map
-		//cout << "x1: " << x1 << " y1: " << y1 << endl;
-		ofColor vertex1Color = image.getColor(x1, y1);
-		//cout << "x2: " << x1 << " y2: " << y1 << endl;
-		ofColor vertex2Color = image.getColor(x2, y2);
-		//cout << "x3: " << x1 << " y3: " << y1 << endl;
-		ofColor vertex3Color = image.getColor(x3, y3);
-
-		//cout << "All colors are assigned" << endl;
 		//find the center of the texture map's triangle
 		int x4 = (x1 + x2 + x3) / 3;
 		int y4 = (y1 + y2 + y3) / 3;

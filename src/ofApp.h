@@ -77,7 +77,7 @@ public:
 	ViewPlane vp;
 	vector<SceneObject *> scene;				//vector to hold all the objects in the scene
 	vector<SceneObject*> selected;				//vector to hold an object that is selected
-	int imageH = 200, imageW = 300;			//dimensions for the image to render
+	int imageH = 600, imageW = 900;				//dimensions for the image to render
 	float squares = 10;							//the dimensions for how many tiles you want layed on the plane
 	int sceneIdx = 0;
 	int lvls = 5;
@@ -99,7 +99,7 @@ public:
 	ofxFloatSlider angleRot;
 	ofxVec2Slider tValue;
 
-	ofColor ambient = ofColor::lightGray;	//a constant ambient color
+	ofColor ambient = ofColor::lightCyan;	//a constant ambient color
 	float pWidth = 20, pHeight = 20;
 	//double check these for what values need to be in them
 	const float MAX_RAY_STEPS = 200;			//maximum amount of iterations for moving along the ray

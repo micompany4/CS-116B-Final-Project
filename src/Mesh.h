@@ -7,17 +7,17 @@ class Mesh : public SceneObject
 public:
 	Mesh();
 	~Mesh();
-	Mesh(FILE* f, ofImage img);
+	Mesh(FILE* f);
 
-	void create(FILE* f, ofImage img);
+	void create(FILE* f);
 	bool intersect(const Ray &ray, glm::vec3 &point, glm::vec3 &normal); 
 	void draw();
 
 
-	vector<Triangle> triList;			//vector of all the triangles in the mesh
-	vector<glm::vec3> vertices;			//vector that holds all the vertices in the mesh
+	vector<Triangle> triList;				//vector of all the triangles in the mesh
+	vector<glm::vec3> vertices;				//vector that holds all the vertices in the mesh
 	vector<glm::vec2> texture;				//vector that holds the uv points for the texture map
-	vector<int> textIndex;
+	
 
 	const char* face = "f";					//constant string that signals a face
 	const char* vert = "v";					//constant string that signals a vertex

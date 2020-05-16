@@ -29,13 +29,13 @@ void ofApp::setup() {
 	ping.load("quick.mp3");
 
 	//adds a plane to the scene
-	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::darkBlue));
+	scene.push_back(new Plane(glm::vec3(0, -2, 0), glm::vec3(0, 1, 0), ofColor::lawnGreen));
 
 
 	//add primitives to the scene
 	//scene.push_back(new Triangle(glm::vec3(-2, 1, 0), glm::vec3(0, 3, 0), glm::vec3(2, 1, 0), ofColor::yellow));
-	//scene.push_back(new Sphere(glm::vec3(-0.7, 0.5, 2), 2.5, ofColor(58, 127, 54)));			//0 0 4
-	//scene.push_back(new Sphere(glm::vec3(4.5, 3.2, -1.5), 1.5, ofColor(144, 141, 23)));
+	//scene.push_back(new Sphere(glm::vec3(-3, 0.1, 1.5), 1.8, ofColor(49, 176, 181)));			//0 0 4
+	//scene.push_back(new Sphere(glm::vec3(3.3, 2.8, -1.2), 2.8, ofColor(130, 74, 181)));
 	//scene.push_back(new Sphere(glm::vec3(-4, 5, -2), 1.4, ofColor(128, 12, 55)));
 
 	//add the mesh to the scene
@@ -50,11 +50,7 @@ void ofApp::setup() {
 		printf("file successfully opened\n");
 		//characterModel.loadModel("geo/link0.obj");
 		//characterModel.setScaleNormalization(false);
-		/*if (texture.load("alienColor.jpg"))
-		{
-			cout << "texture map loaded successfully" << endl;
-		}*/
-		objMesh = new Mesh(f, texture);		
+		objMesh = new Mesh(f);		
 		scene.push_back(objMesh);						
 		//tree.create(*objMesh, lvls);
 		cout << "added mesh" << endl;
@@ -63,11 +59,12 @@ void ofApp::setup() {
 	
 
 	//add lights to the scene
-	lights.push_back(new Light(105, glm::vec3(-12, 3, 17), false));
+	//lights.push_back(new Light(105, glm::vec3(-12, 3, 17), false));
 	lights.push_back(new Light(100, glm::vec3(-0.8, 14.7, -2.7), false));
 	lights.push_back(new Light(200, glm::vec3(12, 12, 12), false));		
-	//lights.push_back(new Light(75, glm::vec3(0, 8, 0), false));
-	//lights.push_back(new Light(500, glm::vec3(5, 20, 10), false));		//the sun
+	//lights.push_back(new Light(125, glm::vec3(-12, 6, 16), false));
+	//lights.push_back(new Light(85, glm::vec3(-10, 15, -12), false));			//back light to fill where the sun can't reach
+	//lights.push_back(new Light(275, glm::vec3(10, 20, 14), false));				//the sun
 
 	image.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);		//allocates an image with desired dimensions
 	map.allocate(imageW, imageH, ofImageType::OF_IMAGE_COLOR);
@@ -262,7 +259,7 @@ ofColor ofApp::phong(const glm::vec3 &p, const glm::vec3 &norm, const ofColor di
 ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColor diffuse, const ofColor specular, float power, SceneObject* obj)
 {
 	ofColor totalColor = ofColor::black;	//set an inital color to black since its (0, 0, 0) so we can add color to it
-	ofColor diffuse2 = diffuse;
+	ofColor diffuse2 = diffuse;				//diffuse is a const ofColor, so set an ofColor that can be assigned 
 	float bound = 0;
 
 	//for each light, get a shading color value
@@ -333,21 +330,20 @@ ofColor ofApp::allShader(const glm::vec3 &p, const glm::vec3 &norm, const ofColo
 	}
 
 	//cout << "brightness: " << totalColor.getBrightness() << endl;
-	//toon shading magic
+	//toon shading implementation for the gradients
 	//values where deemed through experimentation and observation 
 	if (totalColor.getBrightness() <= 40)
 	{
-		diffuse2.setBrightness(9);
+		diffuse2.setBrightness(9);		//generate a dark shadow of the object's diffuse color
 		totalColor = diffuse2;
 	}
 	else if (totalColor.getBrightness() > 40 && totalColor.getBrightness() < 60)
 	{
-		totalColor.setBrightness(27);
-		//totalColor = ofColor::darkRed;
+		totalColor.setBrightness(27);	//generate a gray shadow gradient for in-between the dark and light parts of the object
 	}
 	else
 	{
-		totalColor.setBrightness(64);
+		totalColor.setBrightness(64);	//generate a bright and vivid color for the object
 	}
 
 	return totalColor;
@@ -430,25 +426,8 @@ void ofApp::rayTrace()
 								//cout << c << " " << index << endl;
 							}
 						}
-
-						//first element is the plane so use the texture map, kind of a cheat I know
-						//if (index == 0)
-						//{
-						//	//gets the coordinates of the closest object 
-						//	float x = points[index].x + (pWidth / 2);
-						//	float z = points[index].z + (pHeight / 2);
-						//	//convert those coordinates to uv coordinates
-						//	float uu = (x + .5) / pWidth;
-						//	float vv = (z + .5) / pHeight;
-						//	ofColor fc = allShader(points[index], n[index], lookup(uu*squares, v*squares), scene[index]->specularColor, power, scene[index]);
-						//	superColor += fc / 4;
-						//}
-						//else
-						//{
-							ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]);
-							superColor += objColor / 4;
-						//}
-						
+						ofColor objColor = allShader(points[index], n[index], scene[index]->diffuseColor, scene[index]->specularColor, power, scene[index]);
+						superColor += objColor / 4;
 					}
 					else
 					{

@@ -21,6 +21,7 @@ public:
 	void draw();
 	bool intersect(const Ray &ray, glm::vec3 &p, glm::vec3 &normal)
 	{
+		//calculate the barycentric coordinate of the triangle
 		float x = (v1.x + v2.x + v3.x) / 3;
 		float y = (v1.y + v2.y + v3.y) / 3;
 		float z = (v1.z + v1.z + v3.z) / 3;
@@ -39,6 +40,6 @@ public:
 
 	int i, j, k;			//the three vertices that make up the triangle
 	int t1, t2, t3;			//the three texture vertices that the triangle has
-	glm::vec3 v1, v2, v3;
+	glm::vec3 v1, v2, v3;	//the positions of each vertex 
 };
 
